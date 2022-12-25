@@ -1,4 +1,5 @@
 import React from "react";
+import './table.css'
 import {
   Chart as ChartJS,
   ArcElement,
@@ -70,8 +71,47 @@ const RegChart = (props) => {
         {(props.graph===2)&&<Line  data={data} height={400} options={options} />}  
         {(props.graph===3)&&<Pie  data={data} height={400} options={options} />}  
         {(props.graph===4)&&<PolarArea  data={data} height={400} options={options} />}  
+        {(props.graph===5)&&<div className="w-auto">{stats(props.stats)}</div>}  
        </> 
   );
 };
 
 export default RegChart;
+
+const stats=(data)=>{
+  console.log(data) 
+  return(
+    <>
+      <table border={true}>
+        <tr>
+          <td>Branches</td>
+          {data.map((x)=><td>{x.branch}</td>)}
+        </tr>
+        <tr>
+          <td>NRI occupied</td>
+          {data.map((x)=><td>{x.occupiedSeatsNRI}</td>)}
+        </tr>
+        <tr>
+          <td>NRI remaining</td>
+          {data.map((x)=><td>{x.NRISeats-x.occupiedSeatsNRI}</td>)}
+        </tr>
+        <tr>
+          <th>NRI total</th>
+          {data.map((x)=><th>{x.NRISeats}</th>)}
+        </tr>
+        <tr>
+          <td>SUP occupied</td>
+          {data.map((x)=><td>{x.occupiedSeatsSuper}</td>)}
+        </tr>
+        <tr>
+          <td>SUP remaining</td>
+          {data.map((x)=><td>{x.SuperSeats-x.occupiedSeatsSuper}</td>)}
+        </tr>
+        <tr>
+          <th>SUP total</th>
+          {data.map((x)=><th>{x.SuperSeats}</th>)}
+        </tr>
+      </table>
+    </>
+  )
+}

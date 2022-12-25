@@ -26,7 +26,7 @@ const HomePage = () => {
   const [completed, setCompleted] = useState(0);
   const [refresh,setRefrect] = useState(null)
   const [graph,setGraph] = useState(0)
-  let g = 0;
+  const [rawdata,setRawData] = useState()
 
   const token = localStorage.getItem("admin_access_token")
   const query = {
@@ -41,7 +41,7 @@ const HomePage = () => {
     axios
       .post(api+'branch/getAll',{},query)
       .then((res) => {
-        console.log(res.data);
+        setRawData(res.data.list)
         for(let i=0; i<res.data.list.length ; i++){
           if(res.data.list[i].branch === "CSE"){
              setCse(Number(res.data.list[i].occupiedSeats))
@@ -94,7 +94,7 @@ const HomePage = () => {
             <ChangeCircleIcon fontSize="large" />
           </IconButton>
       <IconButton sx={{position:"absolute",right:"8%",top:"6.5%"}} onClick={()=>{
-        setGraph(graph=>((++graph)%5))
+        setGraph(graph=>((++graph)%6))
       }}>
             <ArrowForwardIosIcon fontSize="small" />
           </IconButton>
@@ -107,7 +107,7 @@ const HomePage = () => {
           {/* {branchCount.map((index)=>{
             return(<RegChart key={branchCount.indexOf(index)} data={index} />)
           })} */}
-          <RegChart labeldata = {branchCount} graph={graph}/>
+          <RegChart labeldata = {branchCount} graph={graph} stats={rawdata}/>
         </div>
       </div>
       <div className=" w-full xl:w-1/2 h-auto flex flex-col  space-y-6">

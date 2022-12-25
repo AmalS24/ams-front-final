@@ -1,0 +1,9 @@
+th,td{
+    border: 1px solid;
+}
+td{
+    background-color: beige;
+}
+th{
+    background-color: bisque;
+}
